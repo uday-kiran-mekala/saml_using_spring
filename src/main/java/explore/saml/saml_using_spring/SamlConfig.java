@@ -1,6 +1,6 @@
 package explore.saml.saml_using_spring;
 
-import explore.saml.saml_using_spring.authn_requests.AuthnRequestsService;
+import explore.saml.saml_using_spring.authn_requests.SamlAuthnRequestsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +30,10 @@ import static explore.saml.saml_using_spring.Util.loadX509CertificateFromPemFile
 @EnableWebSecurity
 public class SamlConfig {
 
-    private final AuthnRequestsService authnRequestsService;
+    private final SamlAuthnRequestsService samlAuthnRequestsService;
 
-    public SamlConfig(AuthnRequestsService authnRequestsService) {
-        this.authnRequestsService = authnRequestsService;
+    public SamlConfig(SamlAuthnRequestsService samlAuthnRequestsService) {
+        this.samlAuthnRequestsService = samlAuthnRequestsService;
     }
 
     public static void mainn(String[] args) throws Exception {
@@ -55,7 +55,7 @@ public class SamlConfig {
     @Bean
     SecurityFilterChain samlSpringSecurityFilterChain(HttpSecurity http, RelyingPartyRegistrationResolver resolver) throws Exception {
         Saml2AuthenticationTokenConverter converter = new Saml2AuthenticationTokenConverter(resolver);
-        converter.setAuthenticationRequestRepository(authnRequestsService);
+        converter.setAuthenticationRequestRepository(samlAuthnRequestsService);
 
         DefaultSecurityFilterChain securityChain = http
                 .authorizeHttpRequests(authorizeRequests ->
@@ -75,7 +75,7 @@ public class SamlConfig {
                 .filter(Saml2WebSsoAuthenticationRequestFilter.class::isInstance)
                 .map(Saml2WebSsoAuthenticationRequestFilter.class::cast)
                 .findFirst().orElseThrow();
-        requestFilter.setAuthenticationRequestRepository(authnRequestsService);
+        requestFilter.setAuthenticationRequestRepository(samlAuthnRequestsService);
 
         return securityChain;
     }

@@ -10,7 +10,6 @@ import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistration;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
-import org.springframework.security.saml2.provider.service.registration.Saml2MessageBinding;
 import org.springframework.stereotype.Repository;
 
 import java.io.ByteArrayInputStream;
@@ -56,7 +55,7 @@ public class SSORelayingPartyRepository implements RelyingPartyRegistrationRepos
 
                     .entityId(SPDetails.SP_ENTITY_ID)
 //                    .assertionConsumerServiceLocation(SPDetails.SP_ACS_URL)
-                    .assertionConsumerServiceBinding(Saml2MessageBinding.POST)
+//                    .assertionConsumerServiceBinding(Saml2MessageBinding.POST)
                     .signingX509Credentials(this::addSigningCredentials)
                     .build();
         } catch (NumberFormatException exception) {

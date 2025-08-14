@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AuthnRequestsRepository extends JpaRepository<AuthnRequest, Long> {
+public interface SamlAuthnRequestsRepository extends JpaRepository<SamlAuthnRequest, String> {
 
-    Optional<AuthnRequest> findByRegistrationId(Long registrationId);
+    Optional<SamlAuthnRequest> findBySessionToken(String sessionToken);
 
 }

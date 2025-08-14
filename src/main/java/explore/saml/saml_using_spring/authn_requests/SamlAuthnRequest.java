@@ -10,11 +10,12 @@ import org.springframework.security.saml2.provider.service.registration.Saml2Mes
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "authn_request")
-public class AuthnRequest {
+@Table(name = "saml_authn_request")
+public class SamlAuthnRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String sessionToken;
+
     private Long registrationId;
 
     private String authnId;

@@ -25,8 +25,9 @@ public class SSOCredentialsService {
 
         var ssoCredentials1 = samlApp1();
         var ssoCredentials2 = samlApp2();
+        var ssoCredentials3 = samlApp3();
 
-        Iterable<SSOCredentials> saved = repository.saveAll(List.of(ssoCredentials1, ssoCredentials2));
+        Iterable<SSOCredentials> saved = repository.saveAll(List.of(ssoCredentials1, ssoCredentials2, ssoCredentials3));
         System.out.println("Loaded SSO Credentials.");
     }
 
@@ -117,6 +118,57 @@ public class SSOCredentialsService {
                         <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
                         <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://trial-3578031.okta.com/app/trial-3578031_saml2_1/exkt6x91l2lSGNrM4697/sso/saml"/>
                         <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://trial-3578031.okta.com/app/trial-3578031_saml2_1/exkt6x91l2lSGNrM4697/sso/saml"/>
+                    </md:IDPSSODescriptor>
+                </md:EntityDescriptor>
+                """;
+
+        return new SSOCredentials(
+                null,
+                provider,
+                idpId,
+                status,
+                ssoType,
+                metadataUrl,
+                metadata
+        );
+    }
+
+    private static SSOCredentials samlApp3() {
+        String provider = "OKTA";
+        String idpId = "http://www.okta.com/exkq1wqn96vvStowd5d7";
+        Status status = Status.ENABLED;
+        SSOType ssoType = SSOType.SAML2;
+        String metadataUrl = "https://dev-44503900.okta.com/app/exkq1wqn96vvStowd5d7/sso/saml/metadata";
+        String metadata = """
+                <?xml version="1.0" encoding="UTF-8"?>
+                <md:EntityDescriptor entityID="http://www.okta.com/exkq1wqn96vvStowd5d7" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+                    <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+                        <md:KeyDescriptor use="signing">
+                            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                                <ds:X509Data>
+                                    <ds:X509Certificate>MIIDqDCCApCgAwIBAgIGAZijG/GPMA0GCSqGSIb3DQEBCwUAMIGUMQswCQYDVQQGEwJVUzETMBEG
+                A1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEU
+                MBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDGRldi00NDUwMzkwMDEcMBoGCSqGSIb3DQEJ
+                ARYNaW5mb0Bva3RhLmNvbTAeFw0yNTA4MTMxMTA1MTRaFw0zNTA4MTMxMTA2MTRaMIGUMQswCQYD
+                VQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsG
+                A1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDGRldi00NDUwMzkwMDEc
+                MBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+                ggEBAJRHCI1Uv3HnB3gVHskTPiio+cVT66HXWuXdiqlSBh5tP6R4oiW2aPXzxveJbteRk+4MbsKx
+                Tg9u4P8DWwPpDSZcOAf3F47LAADv9lplMgHO2lfBGpFYWHbjpZf0+8bQFxqwvPbmWT7Dw3pOplWh
+                zW0ZfY3W6k5tDakyVL4bWxanQkyB2jmVA2PZy5+h5u/3U3ov91sCAj6Mfxszb7INz5ek17NHotNe
+                +XTzsw8sDkAiLvNAECgzicnUdai1Srcg2Nt49dV6UVlchkTFit8yJENU8NW4T9Y/6KlNlLhUfvxo
+                z3oFI5xN5KBwPMMuwDDfKM/6vN0A3Fz0llLFxKp6iFUCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEA
+                kcTxwlRk4bWFbxToLcEpTxNHqHWS8o9PZnViGhlrFg/63hYEvoYAFW4YfZdCQdE/Gth8a/N9u8BX
+                m6ambTLtzBGQIBepkts8A2YNkxoywGmj8ePclynfuebyxvaeKrWCvx/ReGkaGBT6Zgk7VAKQF8no
+                4ORiOhWBXgIIKvnQIdRte/aWhQhEBJFsXxbv7FmOR3kRkjXeFfsQ2ERB2ULOeDOHpjPo43w5Fs2Q
+                5pqJXy7EmJJxrhBpqzcP6K83nzTgsa48cIKuiqsRs8AdwJ8cI1DPtxDC0oNWafPSOeBkrMuXeoxI
+                /mTiOxlExVkmVXELssSmIQqN3V9ikE+2/H2WWQ==</ds:X509Certificate>
+                                </ds:X509Data>
+                            </ds:KeyInfo>
+                        </md:KeyDescriptor>
+                        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+                        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://dev-44503900.okta.com/app/dev-44503900_devsaml_1/exkq1wqn96vvStowd5d7/sso/saml"/>
+                        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://dev-44503900.okta.com/app/dev-44503900_devsaml_1/exkq1wqn96vvStowd5d7/sso/saml"/>
                     </md:IDPSSODescriptor>
                 </md:EntityDescriptor>
                 """;
